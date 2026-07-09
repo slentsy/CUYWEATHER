@@ -1,29 +1,15 @@
-const APIKEY = "9de8e63dfd1845ecb3862718251307";
-const city = document.querySelector(".city").textContent; 
+let background = document.getElementById("background");
 
-function isNight(hour){
-    
+let username = "Sophia";
+
+let admin = document.getElementById("changeAdmin");
+
+function changeBackground(){
+    console.log("Gambar background berubah");
+    background.style.backgroundImage = "url('assets/night-mountain.png')";
 }
 
-// alert(city);
-function getWeatherByCity(city){
-    const url = `http://api.weatherapi.com/v1//forecast.json?key=${APIKEY}&q=${city}`;
-
-    fetch(url)
-    .then(response => response.json())
-    .then(result => {
-        const location = result.location; 
-
-        const localHour = new Date(location.localtime).getHours(); 
-
-        console.log(localHour);
-
-    }).catch(err => {
-        console.error(err)
-    })
-
-}
-
-window.onload= () =>{
-    getWeatherByCity(city);
+function changeValueAdmin(){
+    admin.value = username;
+    alert("Admin: " + admin.value);
 }

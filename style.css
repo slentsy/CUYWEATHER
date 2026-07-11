@@ -1,15 +1,202 @@
 /* CLEAR ELEMENT STYLE */
-html, 
-body, 
-:root {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-#background {
-    background-image: url('assets/day-mountain.png');
-    background-size:cover; 
-    width: 100vw;
+body {
     height: 100vh;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
 }
+
+body[data-mode = "day"] {
+    background-color:#fef3bd;
+}
+
+body[data-mode = "night"] {
+    background-color:#0d1b2a;
+}
+
+.weather-card {
+    position: relative; 
+    z-index:1; 
+    width: 360px; 
+    height: 600px;
+    padding: 20px; 
+    border-radius: 20px;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* background over effect */
+.weather-card::before{
+    content: ""; 
+    position:absolute; 
+    inset:0; 
+    padding:10px; 
+    border-radius:20px; 
+    background:linear-gradient(135deg, #00cfff, #ffe15d); 
+    z-index:-1; 
+    pointer-events:none;
+    /* untuk membaca tumpukan dari  background dan warna*/
+    -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Mode Background */
+.weather-card[data-mode = "day"]{
+    background: url(assets/day-mountain.png) no-repeat center bottom;
+    background-size: cover;
+    background-color: #fef3bd;
+}
+
+.weather-card[data-mode = "night"]{
+    background: url(assets/night-mountain.png) no-repeat center bottom;
+    background-size: cover;
+    background-color: #0d1b2a;
+}
+
+.weather-card[data-mode ="day"]::before{
+    background: linear-gradient(135deg, #00cfff, #ffe15d)
+}
+
+.weather-card[data-mode ="night"]::before{
+    background: linear-gradient(135deg, #59ccca, #003466)
+}
+
+/* Weather-Top */
+.weather-top {
+    display:flex; 
+    flex-direction:column; 
+    text-align:center; 
+}
+
+.weather-top .city {
+    font-size:38px;
+    font-weight: 400;
+    text-shadow: 0 0 8px rgba(0,0,0,0.6);
+}
+
+.weather-top .date {
+    font-size:20px;
+    font-weight: 400;
+    text-shadow: 0 0 8px rgba(0,0,0,0.6);
+    margin: 15px 0;
+}
+
+.weather-top .details-top {
+    display:flex;
+    justify-content:space-between;
+    gap: 80px;
+    font-size:15px;
+    /* margin-top: 100px 0; */
+    font-weight: 400;
+    text-shadow: 0 0 4px rgba(0,0,0,0.6);
+}
+
+/* Weather-Center */
+.weather-center {
+    display:flex; 
+    align-items:center;
+    gap: 10px; 
+    margin-top: 150px; 
+}
+
+.weather-center .weather-icon {
+    font-size: 52px; 
+    text-shadow: 0 0 4px rgba(0,0,0,0.6);
+}
+
+.temperature {
+    font-size: 36px;
+    color: white;
+}
+
+/* Sun & Moon Effects */
+.sun, 
+.moon{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* box-shadow: 0 0 30px #ffd700; */
+    animation: ease-in-out infinite;
+    z-index: 0;
+    display: none;
+    transition: opacity 0.5s ease;
+}
+
+.sun {
+    background: #cb7b03;
+    animation: pulse-sun 3s ease-in-out infinite;
+}
+
+.moon {
+    background: #fff;
+    animation: pulse-moon 3s ease-in-out infinite;
+}
+
+@keyframes pulse-sun{
+    0%, 100% {box-shadow: 0 0 30px #ff6f00}
+    50% {box-shadow: 0 0 40px #ff4800;}
+}
+
+@keyframes pulse-moon{
+    0%, 100% {box-shadow: 0 0 30px #19078d}
+    50% {box-shadow: 0 0 40px #19078d;} 
+}
+
+/* forecast */
+#forecast{
+    margin-top:auto;
+    width: 100%; 
+}
+
+.forecast-grid {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; 
+    margin-top: 20px; 
+    width: 100%; 
+}
+
+.forecast-item{
+    background: rgba(78, 77, 77, 0.25);
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
+    backdrop-filter: blur(3px);
+}
+
+.forecast-item .weather-icon{
+    font-size: 38px; 
+    margin: 4px 0; 
+}
+
+.weather-day {
+    font-size: 16px;
+}
+
+.temperatur-card{
+    font-size: 22px;
+    color: #fff;
+}
+
+

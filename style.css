@@ -8,6 +8,7 @@
 body {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center; 
     align-items: center;
 }
@@ -147,7 +148,7 @@ body[data-mode = "night"] {
 }
 
 .moon {
-    background: #fff;
+    background: #19078d;
     animation: pulse-moon 3s ease-in-out infinite;
 }
 

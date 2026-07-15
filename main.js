@@ -18,18 +18,47 @@ function isNight(hour){
     return hour >= 18 || hour < 6;
 }
 
+
 function getWeatherByCity(city){
     // kalau di javascript harus pakai backtick
     // const URL = `http://api.weatherapi.com/v1/${city}`
     const URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=4`;
 
+    const errorMessage = document.querySelector(".error-message");
+
     fetch(URL)
-    .then(response => response.json())
+    .then(response => {
+        if(!response.ok){
+            throw new Error("Kota tidak ditemukan");
+        }
+        return response.json()
+    })
     .then(result => {
+        errorMessage.textContent = "";
         // data dari API
         const location = result.location; 
         const current = result.current;
         const forecast = result.forecast;
+
+        // untuk search input 
+        const searchInput = document.querySelector(".search-input");
+        const searchBtn = document.querySelector(".search-btn");
+        
+
+
+        searchBtn.addEventListener("click", handleSearch);
+        searchInput.addEventListener("keydown", (e)=>{
+            if (e.key === "Enter") handleSearch(); 
+        })
+
+        // handle input 
+        function handleSearch(){
+            const inputCity = searchInput.value.trim()
+            if(!inputCity) return; 
+
+            getWeatherByCity(inputCity);
+            searchInput.value = ""; 
+        }
 
         console.log(current)
         console.log(forecast)
@@ -78,6 +107,7 @@ function getWeatherByCity(city){
 
     }).catch(err => {
         console.error(err);
+        errorMessage.textContent = "Kota tidak ditemukan, coba kata lain"
     })
 }
 
@@ -96,6 +126,7 @@ function updateForecast(days, nightMode){
         }
     })
 }
+
 
 window.onload = () => {
     getWeatherByCity(city);
